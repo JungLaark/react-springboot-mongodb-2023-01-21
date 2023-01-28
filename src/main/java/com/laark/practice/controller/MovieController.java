@@ -1,6 +1,7 @@
 package com.laark.practice.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class MovieController {
 //	public String allMovies() {
 //		return "All Movies";
 //	}
+	
 	//responseEntity 쓰는 이유? 
 	@Autowired
 	private MovieService movieService;
@@ -32,7 +34,12 @@ public class MovieController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Movie> getSingleMovie(@PathVariable ObjectId id){
-		return 
+	public ResponseEntity<Optional<Movie>> getSingleMovie(@PathVariable ObjectId id){
+		return new ResponseEntity<Optional<Movie>>(movieService.singleMovie(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("/{imdbId}")
+	public ResponseEntity<Optional<Movie>> getSingleMovie(@PathVariable String imdbId){
+		return new ResponseEntity<Optional<Movie>>(movieService.singleImdbIdMovie(imdbId), HttpStatus.OK);
 	}
 }
